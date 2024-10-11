@@ -27,11 +27,11 @@ export default class App extends Component {
     value: "",
   };
 
-  getStyle = () => {
+  getStyle = (completed) => {
     return {
       padding: "10px",
       borderBottom: "1px #ccc dotted",
-      textDecoration: "none",
+      textDecoration: completed ? "line-through" : "none",
     };
   };
 
@@ -53,8 +53,16 @@ export default class App extends Component {
       completed: false,
     };
 
-    this.setState({ todoData: [...this.state.todoData, newTodo] });
-    this.setState({ value: "" });
+    this.setState({ todoData: [...this.state.todoData, newTodo], value: "" });
+  };
+
+  handleCompletedChange = (id) => {
+    const newTodoData = this.state.todoData.map((item) => {
+      item.id === id && (item.completed = !item.completed);
+      return item;
+    });
+
+    this.setState({ todoData: newTodoData });
   };
 
   render() {
@@ -65,8 +73,12 @@ export default class App extends Component {
             <h1>할 일 목록</h1>
           </div>
           {this.state.todoData.map((item) => (
-            <div style={this.getStyle()} key={item.id}>
-              <input type="checkbox" defaultChecked={item.completed} />
+            <div style={this.getStyle(item.completed)} key={item.id}>
+              <input
+                type="checkbox"
+                defaultChecked={item.completed}
+                onClick={() => this.handleCompletedChange(item.id)}
+              />
               {item.title}
               <button
                 style={this.btnStyle}
