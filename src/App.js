@@ -11,6 +11,21 @@ export default class App extends Component {
     float: "right",
   };
 
+  state = {
+    todoData: [
+      {
+        id: "1",
+        title: "공부하기",
+        completed: true,
+      },
+      {
+        id: "2",
+        title: "청소하기",
+        completed: false,
+      },
+    ],
+  };
+
   getStyle = () => {
     return {
       padding: "10px",
@@ -19,21 +34,9 @@ export default class App extends Component {
     };
   };
 
-  todoData = [
-    {
-      id: "1",
-      title: "공부하기",
-      completed: true,
-    },
-    {
-      id: "2",
-      title: "청소하기",
-      completed: false,
-    },
-  ];
-
   handleClick = (id) => {
-    const newTodoData = this.todoData.filter((n) => n.id !== id);
+    const newTodoData = this.state.todoData.filter((n) => n.id !== id);
+    this.setState({ todoData: newTodoData });
   };
 
   render() {
@@ -43,7 +46,7 @@ export default class App extends Component {
           <div className="title">
             <h1>할 일 목록</h1>
           </div>
-          {this.todoData.map((item) => (
+          {this.state.todoData.map((item) => (
             <div style={this.getStyle()} key={item.id}>
               <input type="checkbox" defaultChecked={item.completed} />
               {item.title}
