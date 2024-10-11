@@ -24,6 +24,7 @@ export default class App extends Component {
         completed: false,
       },
     ],
+    value: "",
   };
 
   getStyle = () => {
@@ -37,6 +38,23 @@ export default class App extends Component {
   handleClick = (id) => {
     const newTodoData = this.state.todoData.filter((n) => n.id !== id);
     this.setState({ todoData: newTodoData });
+  };
+
+  handleChange = (e) => {
+    this.setState({ value: e.target.value });
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    const newTodo = {
+      id: new Date(),
+      title: this.state.value,
+      completed: false,
+    };
+
+    this.setState({ todoData: [...this.state.todoData, newTodo] });
+    this.setState({ value: "" });
   };
 
   render() {
@@ -58,6 +76,26 @@ export default class App extends Component {
               </button>
             </div>
           ))}
+
+          <form
+            style={{ display: "flex", marginTop: "15px" }}
+            onSubmit={this.handleSubmit}
+          >
+            <input
+              type="text"
+              name="value"
+              style={{ flex: "10", padding: "5px" }}
+              placeholder="해야 할 일을 입력하세요."
+              value={this.state.value}
+              onChange={this.handleChange}
+            />
+            <input
+              type="submit"
+              value="입력"
+              className="btn"
+              style={{ flex: "1" }}
+            />
+          </form>
         </div>
       </div>
     );
