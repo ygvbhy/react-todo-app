@@ -19,7 +19,7 @@ export default function Form({ handleSubmit, value, setValue }) {
         <input
           type="submit"
           value="입력"
-          className="p-2 text-blue-400 border-2 border-blue-400 rounded hover:text-white hover:bg-blue-200"
+          className="cursor-pointer p-2 text-blue-400 border-2 border-blue-400 rounded hover:text-white hover:bg-blue-200"
         />
       </form>
     </>
