@@ -10,6 +10,7 @@ const List = React.memo(
     setTodoData,
     provided,
     snapshot,
+    handleClick,
   }) => {
     const handleCompletedChange = (id) => {
       const newTodoData = todoData.map((item) => {
@@ -20,10 +21,6 @@ const List = React.memo(
       setTodoData(newTodoData);
     };
 
-    const handleClick = (id) => {
-      const newTodoData = todoData.filter((n) => n.id !== id);
-      setTodoData(newTodoData);
-    };
     return (
       <div
         key={key}
