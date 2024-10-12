@@ -3,8 +3,12 @@ import Lists from "./components/Lists";
 import Form from "./components/Form";
 import "./App.css";
 
-export default function App() {
-  const [todoData, setTodoData] = useState([]);
+const App = () => {
+  const initalTodoData = localStorage.getItem("todoData")
+    ? JSON.parse(localStorage.getItem("todoData"))
+    : [];
+  const [todoData, setTodoData] = useState(initalTodoData);
+  console.log(todoData);
 
   const [value, setValue] = useState("");
 
@@ -18,6 +22,7 @@ export default function App() {
     };
 
     setTodoData((prev) => [...prev, newTodo]);
+    localStorage.setItem("todoData", JSON.stringify([...todoData, newTodo]));
     setValue("");
   };
 
@@ -25,12 +30,14 @@ export default function App() {
     (id) => {
       const newTodoData = todoData.filter((n) => n.id !== id);
       setTodoData(newTodoData);
+      localStorage.setItem("todoData", JSON.stringify(newTodoData));
     },
     [todoData]
   );
 
   const handleDelete = () => {
     setTodoData([]);
+    localStorage.setItem("todoData", JSON.stringify([]));
   };
 
   return (
@@ -49,4 +56,6 @@ export default function App() {
       </div>
     </div>
   );
-}
+};
+
+export default App;
